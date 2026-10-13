@@ -10,7 +10,7 @@ jobs:
     steps:
       - name: Use the released action from the standalone public repo
         id: valuation
-        uses: Aymanseif/teos-repo-valuation@v1.2.3
+        uses: Aymanseif/teos-repo-valuation@v1.2.4
         with:
           github-token: ${{ github.token }}
 
