@@ -10,15 +10,14 @@ jobs:
     steps:
       - name: Use the released action from the standalone public repo
         id: valuation
-        uses: Elmahrosa/teos-repo-valuation@v1.2.0
+        uses: Elmahrosa/teos-repo-valuation@v1.2.1
         with:
           github-token: ${{ github.token }}
 
-      - name: Show the outputs (real consumer contract)
+      - name: Assert the real consumer contract
         run: |
           echo "score=${{ steps.valuation.outputs.score }}"
-          echo "valuation=${{ steps.valuation.outputs.valuation }}"
           echo "decision=${{ steps.valuation.outputs.decision }}"
-          test -n "${{ steps.valuation.outputs.score }}" || { echo "score output is empty"; exit 1; }
-          test -n "${{ steps.valuation.outputs.valuation }}" || { echo "valuation output is empty"; exit 1; }
-          test -n "${{ steps.valuation.outputs.decision }}" || { echo "decision output is empty"; exit 1; }
+          test "${{ steps.valuation.outputs.score }}" = "90"
+          test "${{ steps.valuation.outputs.decision }}" = "ALERT"
+          test '${{ steps.valuation.outputs.valuation }}' = '$193-$442'
